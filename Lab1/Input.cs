@@ -19,15 +19,12 @@ namespace Lab1
         {
             while (true)
             {
-                switch (ReadKey(s))
+                switch (char.ToUpper(ReadKey(s)))
                 {
-                    case 'r':
                     case 'R':
                         return BlockState.Red;
-                    case 'g':
                     case 'G':
                         return BlockState.Green;
-                    case 'y':
                     case 'Y':
                         return BlockState.Yellow;
                     default:

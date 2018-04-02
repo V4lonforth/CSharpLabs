@@ -1,4 +1,6 @@
 ﻿using System;
+using Lab1;
+using Lab2.Menu;
 
 namespace Lab2
 {
@@ -7,9 +9,9 @@ namespace Lab2
         static void Main(string[] args)
         {
             Console.WriteLine("Lab2");
-
-            AdvancedPathController pathController = new AdvancedPathController();
-            AdvancedMenuController menuController = new AdvancedMenuController(pathController);
+            
+            AdvancedMenuActions advancedMenuActions = new AdvancedMenuActions(new PathController(), new Serializer());
+            AdvancedMenuController menuController = new AdvancedMenuController(advancedMenuActions);
 
             do
             {

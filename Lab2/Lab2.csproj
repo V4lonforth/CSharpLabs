@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvancedMenuController.cs" />
-    <Compile Include="AdvancedPathController.cs" />
+    <Compile Include="Menu\AdvancedMenuActions.cs" />
+    <Compile Include="Menu\AdvancedMenuController.cs" />
+    <Compile Include="Menu\IAdvancedMenuActions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />

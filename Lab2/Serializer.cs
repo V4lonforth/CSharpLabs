@@ -7,29 +7,23 @@ namespace Lab2
 {
     public class Serializer
     {
-        public void Serialize(BlockState[] blockStates)
+        public Exception Serialize(BlockState[] blockStates, string path)
         {
-            bool isSerialized = false;
-            while (!isSerialized)
+            try
             {
-                try
+                using (StreamWriter stream = new StreamWriter(path))
                 {
-                    Console.WriteLine("Provide path: ");
-                    string path = Console.ReadLine();
-                    using (StreamWriter stream = new StreamWriter(path))
-                    {
-                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(BlockState[]));
-                        xmlSerializer.Serialize(stream, blockStates);
-                        isSerialized = true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(BlockState[]));
+                    xmlSerializer.Serialize(stream, blockStates);
                 }
             }
+            catch (Exception e)
+            {
+                return e;
+            }
+            return null;
         }
-        public BlockState[] Deserialize()
+        public Exception Deserialize(string path, out BlockState[] states)
         {
             bool isDeserialized = false;
             BlockState[] blockStates = null;
@@ -37,8 +31,6 @@ namespace Lab2
             {
                 try
                 {
-                    Console.WriteLine("Provide path: ");
-                    string path = Console.ReadLine();
                     using (StreamReader stream = new StreamReader(path))
                     {
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(BlockState[]));
@@ -48,10 +40,12 @@ namespace Lab2
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    states = blockStates;
+                    return e;
                 }
             }
-            return blockStates;
+            states = blockStates;
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Lab1.Menu;
 
 namespace Lab1
 {
@@ -8,7 +9,10 @@ namespace Lab1
         {
             Console.WriteLine("Lab1\n");
 
-            MenuController menuController = new MenuController();
+            PathController pathController = new PathController();
+            pathController.ReadBlocksInfo();
+            MenuActions menuActions = new MenuActions(pathController);
+            MenuController menuController = new MenuController(menuActions);
 
             do
             {

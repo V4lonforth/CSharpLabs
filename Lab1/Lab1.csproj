@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockState.cs" />
+    <Compile Include="Input\Parser.cs" />
     <Compile Include="Input\Reader.cs" />
     <Compile Include="Menu\IMenuActions.cs" />
     <Compile Include="Menu\MenuActions.cs" />

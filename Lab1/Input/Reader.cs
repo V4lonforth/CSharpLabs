@@ -4,44 +4,11 @@ namespace Lab1.Input
 {
     public class Reader
     {
-        private StringFormatChecker stringFormatChecker;
+        private Parser parser;
 
         public Reader()
         {
-            stringFormatChecker = new StringFormatChecker();
-        }
-
-        private string ReadString(Func<string, int, int, Exception> func, int min, int max)
-        {
-            string str = null;
-            bool isReadingCompleted = false;
-
-            while (!isReadingCompleted)
-            {
-                str = Console.ReadLine();
-                Exception exception = func(str, min, max);
-                if (exception == null)
-                    isReadingCompleted = true;
-                else
-                    Console.WriteLine(exception.Message + " Try again: ");
-            }
-            return str;
-        }
-        private string ReadString(Func<string, Exception> func)
-        {
-            string str = null;
-            bool isReadingCompleted = false;
-
-            while (!isReadingCompleted)
-            {
-                str = Console.ReadLine();
-                Exception exception = func(str);
-                if (exception == null)
-                    isReadingCompleted = true;
-                else
-                    Console.WriteLine(exception.Message + " Try again: ");
-            }
-            return str;
+            parser = new Parser();
         }
 
         public string ReadString(string s)
@@ -52,33 +19,54 @@ namespace Lab1.Input
 
         public int ReadNumber(string s, int minValue = int.MinValue, int maxValue = int.MaxValue)
         {
+            bool parsed = false;
             Console.Write(s);
-            return int.Parse(ReadString(stringFormatChecker.CheckNumberFormat, minValue, maxValue));
+            int number = 0;
+            while (!parsed)
+            {
+                s = Console.ReadLine();
+                Exception exception = parser.ParseNumber(s, out number, minValue, maxValue);
+                if (exception == null)
+                    parsed = true;
+                else
+                    Console.Write(exception.Message + " Try again: ");
+            }
+            return number;
         }
 
         public char ReadKey(string s)
         {
+            bool parsed = false;
             Console.Write(s);
-            return ReadString(stringFormatChecker.CheckKeyFormat)[0];
+            char key = ' ';
+            while (!parsed)
+            {
+                s = Console.ReadLine();
+                Exception exception = parser.ParseKey(s, out key);
+                if (exception == null)
+                    parsed = true;
+                else
+                    Console.Write(exception.Message + " Try again: ");
+            }
+            return key;
         }
 
         public BlockState ReadState(string s)
         {
+
+            bool parsed = false;
             Console.Write(s);
-            string str = ReadString(stringFormatChecker.CheckBlockStateFormat);
-            return ConvertToBlockState(str[0]);
-        }
-        public BlockState ConvertToBlockState(char c)
-        {
-            switch(char.ToUpper(c))
+            BlockState state = 0;
+            while (!parsed)
             {
-                case 'R':
-                    return BlockState.Red;
-                case 'G':
-                    return BlockState.Green;
-                default:
-                    return BlockState.Yellow;
+                s = Console.ReadLine();
+                Exception exception = parser.ParseBlockState(s, out state);
+                if (exception == null)
+                    parsed = true;
+                else
+                    Console.Write(exception.Message + " Try again: ");
             }
+            return state;
         }
     }
 }

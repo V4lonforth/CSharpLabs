@@ -2,7 +2,7 @@
 
 namespace Lab1.Input
 {
-    class Parser
+    public class Parser
     {
         private StringFormatChecker stringFormatChecker;
 

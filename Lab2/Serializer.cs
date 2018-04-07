@@ -34,6 +34,7 @@ namespace Lab2
                     using (StreamReader stream = new StreamReader(path))
                     {
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(BlockState[]));
+                        xmlSerializer.UnknownElement += XmlSerializer_UnknownElement;
                         isDeserialized = true;
                         blockStates = (BlockState[])xmlSerializer.Deserialize(stream);
                     }
@@ -46,6 +47,11 @@ namespace Lab2
             }
             states = blockStates;
             return null;
+        }
+
+        private void XmlSerializer_UnknownElement(object sender, XmlElementEventArgs e)
+        {
+            Console.WriteLine(e.Element.Name);
         }
     }
 }

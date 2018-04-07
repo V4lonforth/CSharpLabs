@@ -8,9 +8,9 @@ namespace Lab2.Menu
     {
         private Serializer serializer;
 
-        public AdvancedMenuActions(PathController pathController, Serializer serializer) : base(pathController)
+        public AdvancedMenuActions(PathController pathController) : base(pathController)
         {
-            this.serializer = serializer;
+            serializer = new Serializer();
         }
         
         public void CreateBlocks()

@@ -10,7 +10,7 @@ namespace Lab2
         {
             Console.WriteLine("Lab2");
             
-            AdvancedMenuActions advancedMenuActions = new AdvancedMenuActions(new PathController(), new Serializer());
+            AdvancedMenuActions advancedMenuActions = new AdvancedMenuActions(new PathController());
             AdvancedMenuController menuController = new AdvancedMenuController(advancedMenuActions);
 
             do

@@ -1,29 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lab1.Input;
+using Lab1.Output;
 
 namespace Lab1.Menu
 {
     public class MenuController
     {
-        private Reader reader;
+        private IReader reader;
+        private IWriter writer;
 
         private bool shouldExit;
 
         protected List<MenuElement> menuElements;
         
-        public MenuController()
+        public MenuController(IReader reader, IWriter writer)
         {
-            reader = new Reader();
+            this.reader = reader;
+            this.writer = writer;
         }
-        public MenuController(IMenuActions actions)
+        public MenuController(IMenuActions actions, IReader reader, IWriter writer)
         {
-            reader = new Reader();
+            this.reader = reader;
+            this.writer = writer;
             FillMenuElements(actions);
         }
-        public MenuController(List<MenuElement> elements)
+        public MenuController(List<MenuElement> elements, IReader reader, IWriter writer)
         {
-            reader = new Reader();
+            this.reader = reader;
+            this.writer = writer;
             menuElements = elements;
         }
 
@@ -40,7 +45,7 @@ namespace Lab1.Menu
 
         public bool PressKey()
         {
-            int number = reader.ReadNumber(">", 1, menuElements.Count);
+            int number = reader.ReadNumber(GetMenuText() + ">", 1, menuElements.Count);
             menuElements[number - 1].PressKey();
 
             if (shouldExit)
@@ -48,11 +53,12 @@ namespace Lab1.Menu
             return true;
         }
 
-        public void WriteMenuText()
+        private string GetMenuText()
         {
-            Console.WriteLine("\nMenu:");
+            string s = "\nMenu:\n";
             for (int i = 0; i < menuElements.Count; i++)
-                menuElements[i].WriteElementText(i + 1);
+                s += menuElements[i].WriteElementText(i + 1, writer) + '\n';
+            return s;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Lab1.Menu;
+using Lab1.Input;
+using Lab1.Output;
 
 namespace Lab1
 {
@@ -9,15 +11,17 @@ namespace Lab1
         {
             Console.WriteLine("Lab1\n");
 
-            PathController pathController = new PathController();
-            pathController.ReadBlocksInfo();
-            MenuActions menuActions = new MenuActions(pathController);
-            MenuController menuController = new MenuController(menuActions);
+            ConsoleReader reader = new ConsoleReader();
+            ConsoleWriter writer = new ConsoleWriter();
 
-            do
-            {
-                menuController.WriteMenuText();
-            } while (menuController.PressKey());
+            PathController pathController = new PathController(reader);
+            pathController.ReadBlocksInfo();
+            MenuActions menuActions = new MenuActions(pathController, reader, writer);
+            MenuController menuController = new MenuController(menuActions, reader, writer);
+
+            bool finished = false;
+            while (!finished)
+                finished = !menuController.PressKey();
         }
     }
 }

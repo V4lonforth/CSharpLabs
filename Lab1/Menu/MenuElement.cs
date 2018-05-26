@@ -1,4 +1,5 @@
 ﻿using System;
+using Lab1.Output;
 
 namespace Lab1.Menu
 { 
@@ -18,9 +19,9 @@ namespace Lab1.Menu
             action();
         }
 
-        public void WriteElementText(int index)
+        public string WriteElementText(int index, IWriter writer)
         {
-            Console.WriteLine("{0}.{1}", index, text);
+            return index.ToString() + '.' + text;
         }
     }
 }

@@ -1,17 +1,19 @@
-﻿using System;
-using Lab1.Input;
+﻿using Lab1.Input;
+using Lab1.Output;
 
 namespace Lab1.Menu
 {
     public class MenuActions : IMenuActions
     {
         protected PathController pathController;
-        protected Reader reader;
+        protected IReader reader;
+        protected IWriter writer;
 
-        public MenuActions(PathController controller)
+        public MenuActions(PathController controller, IReader reader, IWriter writer)
         {
             pathController = controller;
-            reader = new Reader();
+            this.reader = reader;
+            this.writer = writer;
         }
 
         public void ChangeState()
@@ -21,7 +23,7 @@ namespace Lab1.Menu
 
             pathController.ChangeState(index, state);
 
-            Console.WriteLine("Block state changed.");
+            writer.WriteLine("Block state changed.");
         }
 
         public void Check()
@@ -31,31 +33,15 @@ namespace Lab1.Menu
 
             int blockNumber = pathController.Check(first, last);
             if (blockNumber == 0)
-                Console.WriteLine("Path is opened.");
+                writer.WriteLine("Path is opened.");
             else
-                Console.WriteLine("Result: {0} block closed.", blockNumber);
+                writer.WriteLine("Result: {0} block closed.", blockNumber);
         }
 
         public void ViewState()
         {
-            Console.Write(ConvertState(pathController.blockStates[0]));
-            for (int i = 1; i < pathController.blockStates.Length; i++)
-                Console.Write(" - {0}", ConvertState(pathController.blockStates[i]));
-            Console.WriteLine();
+            writer.WriteLine(pathController.ViewState());
         }
         
-        private char ConvertState(BlockState state)
-        {
-            switch (state)
-            {
-                case BlockState.Yellow:
-                    return 'Y';
-                case BlockState.Green:
-                    return 'G';
-                case BlockState.Red:
-                    return 'R';
-            }
-            return '-';
-        }
     }
 }

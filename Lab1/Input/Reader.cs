@@ -1,26 +1,30 @@
 ﻿using System;
+using Lab1.Output;
 
 namespace Lab1.Input
 {
-    public class Reader
+    public class ConsoleReader : IReader
     {
         private Parser parser;
+        private IWriter writer;
 
-        public Reader()
+        public ConsoleReader()
         {
             parser = new Parser();
+            writer = new ConsoleWriter();
         }
 
-        public string ReadString(string s)
+        public string ReadString(string s = null)
         {
-            Console.Write(s);
+            if (s != null)
+                writer.Write(s);
             return Console.ReadLine();
         }
 
         public int ReadNumber(string s, int minValue = int.MinValue, int maxValue = int.MaxValue)
         {
             bool parsed = false;
-            Console.Write(s);
+            writer.Write(s);
             int number = 0;
             while (!parsed)
             {
@@ -29,7 +33,7 @@ namespace Lab1.Input
                 if (exception == null)
                     parsed = true;
                 else
-                    Console.Write(exception.Message + " Try again: ");
+                    writer.Write(exception.Message + " Try again: ");
             }
             return number;
         }
@@ -37,7 +41,7 @@ namespace Lab1.Input
         public char ReadKey(string s)
         {
             bool parsed = false;
-            Console.Write(s);
+            writer.Write(s);
             char key = ' ';
             while (!parsed)
             {
@@ -46,7 +50,7 @@ namespace Lab1.Input
                 if (exception == null)
                     parsed = true;
                 else
-                    Console.Write(exception.Message + " Try again: ");
+                    writer.Write(exception.Message + " Try again: ");
             }
             return key;
         }
@@ -55,7 +59,7 @@ namespace Lab1.Input
         {
 
             bool parsed = false;
-            Console.Write(s);
+            writer.Write(s);
             BlockState state = 0;
             while (!parsed)
             {
@@ -64,7 +68,7 @@ namespace Lab1.Input
                 if (exception == null)
                     parsed = true;
                 else
-                    Console.Write(exception.Message + " Try again: ");
+                    writer.Write(exception.Message + " Try again: ");
             }
             return state;
         }

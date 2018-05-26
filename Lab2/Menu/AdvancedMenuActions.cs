@@ -1,14 +1,16 @@
 ﻿using System;
 using Lab1;
+using Lab1.Input;
+using Lab1.Output;
 using Lab1.Menu;
 
 namespace Lab2.Menu
 {
-    class AdvancedMenuActions : MenuActions, IAdvancedMenuActions
+    public class AdvancedMenuActions : MenuActions, IAdvancedMenuActions
     {
         private Serializer serializer;
 
-        public AdvancedMenuActions(PathController pathController) : base(pathController)
+        public AdvancedMenuActions(PathController pathController, IReader reader, IWriter writer) : base(pathController, reader, writer)
         {
             serializer = new Serializer();
         }
@@ -28,7 +30,7 @@ namespace Lab2.Menu
                 if (exception == null)
                     saved = true;
                 else
-                    Console.WriteLine(exception.Message + " Try again.");
+                    writer.WriteLine(exception.Message + " Try again.");
             }
         }
 
@@ -47,7 +49,7 @@ namespace Lab2.Menu
                     pathController.blockStates = buf;
                 }
                 else
-                    Console.WriteLine(exception.Message + " Try again.");
+                    writer.WriteLine(exception.Message + " Try again.");
             }
         }
     }

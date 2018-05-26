@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lab1.Menu;
+using Lab1.Input;
+using Lab1.Output;
 
 namespace Lab2.Menu
 {
@@ -7,7 +9,7 @@ namespace Lab2.Menu
     {
         private IAdvancedMenuActions advancedMenuActions;
 
-        public AdvancedMenuController(IAdvancedMenuActions menuActions) : base()
+        public AdvancedMenuController(IAdvancedMenuActions menuActions, IReader reader, IWriter writer) : base(reader, writer)
         {
             menuElements = new List<MenuElement>()
             {
@@ -16,7 +18,7 @@ namespace Lab2.Menu
             };
             advancedMenuActions = menuActions;
         }
-        public AdvancedMenuController(List<MenuElement> elements) : base(elements)
+        public AdvancedMenuController(List<MenuElement> elements, IReader reader, IWriter writer) : base(elements, reader, writer)
         {
         }
 
